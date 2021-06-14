@@ -49,6 +49,7 @@ if __name__ == "__main__":
     alphabet_functions = [function_a, function_b, function_c]
 
     print("Before rotating function properties:")
+    print(alphabet_functions)
     print(list(map(lambda f: f.__call__(5), alphabet_functions)))
     print(function_a(10))
 
@@ -60,5 +61,6 @@ if __name__ == "__main__":
 
     print("\nAfter rotating function properties:")
     # these will not print the same value as it did before!
+    print(alphabet_functions)
     print(list(map(lambda f: f.__call__(5), alphabet_functions)))
     print(function_a(10))
