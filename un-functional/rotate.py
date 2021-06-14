@@ -32,9 +32,16 @@ def rotate_attrs_right(objects: List, attrs: List, get_and_set: Callable) -> Lis
     return objects
 
 def get_attrs(obj: object, attrs: List) -> Mapping:
+    """
+    Get a mapping of names:values of selected attributes of an object.
+    """
     return {attr: obj.__getattribute__(attr) for attr in attrs}
 
 def get_and_set_attrs(obj: object, new_attrs: Mapping) -> Mapping:
+    """
+    Set attributes of an object from a names:values mapping, then return
+    the old values.
+    """
     attrs = new_attrs.keys()
 
     old_data = {attr: obj.__getattribute__(attr) for attr in attrs}
