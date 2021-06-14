@@ -32,15 +32,22 @@ def rotate_attrs_right(objects: List, attrs: List, get_and_set: Callable) -> Lis
     return objects
 
 def get_attrs(obj: object, attrs: List) -> Mapping:
+    """
+    Get a mapping of names:values of selected attributes of an object.
+    """
     return {attr: obj.__getattribute__(attr) for attr in attrs}
 
-def get_and_set_attrs(f, new_data):
-    attrs = new_data.keys()
+def get_and_set_attrs(obj: object, new_attrs: Mapping) -> Mapping:
+    """
+    Set attributes of an object from a names:values mapping, then return
+    the old values.
+    """
+    attrs = new_attrs.keys()
 
-    old_data = {attr: f.__getattribute__(attr) for attr in attrs}
+    old_data = {attr: obj.__getattribute__(attr) for attr in attrs}
 
     for attr in attrs:
-        f.__setattr__(attr, new_data[attr])
+        obj.__setattr__(attr, new_attrs[attr])
 
     return old_data
 
@@ -48,6 +55,8 @@ def get_and_set_attrs(f, new_data):
 if __name__ == "__main__":
     alphabet_functions = [function_a, function_b, function_c]
 
+    print("Before rotating function properties:")
+    print(alphabet_functions)
     print(list(map(lambda f: f.__call__(5), alphabet_functions)))
     print(function_a(10))
 
@@ -55,5 +64,10 @@ if __name__ == "__main__":
     # set to the original value
     attrs = ["__doc__", "__code__", "__defaults__", "__kwdefaults__", "__annotations__"]
 
-    print(list(map(lambda f: f.__call__(5), rotate_attrs_right(alphabet_functions, attrs, get_and_set_attrs))))
+    alphabet_functions = rotate_attrs_right(alphabet_functions, attrs, get_and_set_attrs)
+
+    print("\nAfter rotating function properties:")
+    # these will not print the same value as it did before!
+    print(alphabet_functions)
+    print(list(map(lambda f: f.__call__(5), alphabet_functions)))
     print(function_a(10))
