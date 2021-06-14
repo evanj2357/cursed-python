@@ -48,6 +48,7 @@ def get_and_set_attrs(obj: object, new_attrs: Mapping) -> Mapping:
 if __name__ == "__main__":
     alphabet_functions = [function_a, function_b, function_c]
 
+    print("Before rotating function properties:")
     print(list(map(lambda f: f.__call__(5), alphabet_functions)))
     print(function_a(10))
 
@@ -55,5 +56,9 @@ if __name__ == "__main__":
     # set to the original value
     attrs = ["__doc__", "__code__", "__defaults__", "__kwdefaults__", "__annotations__"]
 
-    print(list(map(lambda f: f.__call__(5), rotate_attrs_right(alphabet_functions, attrs, get_and_set_attrs))))
+    alphabet_functions = rotate_attrs_right(alphabet_functions, attrs, get_and_set_attrs)
+
+    print("\nAfter rotating function properties:")
+    # these will not print the same value as it did before!
+    print(list(map(lambda f: f.__call__(5), alphabet_functions)))
     print(function_a(10))
