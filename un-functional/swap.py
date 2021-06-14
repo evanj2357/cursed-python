@@ -40,7 +40,6 @@ def get_and_set_attrs(f, new_data):
     old_data = {attr: f.__getattribute__(attr) for attr in attrs}
 
     for attr in attrs:
-        print(attr)
         f.__setattr__(attr, new_data[attr])
 
     return old_data
@@ -50,9 +49,11 @@ if __name__ == "__main__":
     alphabet_functions = [function_a, function_b, function_c]
 
     print(list(map(lambda f: f.__call__(5), alphabet_functions)))
+    print(function_a(10))
 
     # note: this intentionally omits the name because I want to leave that
     # set to the original value
     attrs = ["__doc__", "__code__", "__defaults__", "__kwdefaults__", "__annotations__"]
 
     print(list(map(lambda f: f.__call__(5), rotate_attrs_right(alphabet_functions, attrs, get_and_set_attrs))))
+    print(function_a(10))
